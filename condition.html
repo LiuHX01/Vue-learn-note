@@ -7,5 +7,36 @@
         <title>condition</title>
         <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
     </head>
-    <body></body>
+    <body>
+        <div id="app">
+            <h1 v-if="show">title</h1>
+            <p v-else>if和else必须紧挨着</p>
+
+            <p v-if="mark==100">lv1</p>
+            <p v-else-if="mark > 60">lv2</p>
+            <p v-else>lv3</p>
+
+            <template v-if="show2">
+                <p>一般用template不用div包裹</p>
+                <p>2</p>
+                <p>3</p>
+            </template>
+
+            <p v-show="show3">通过控制display if切换消耗 show初始渲染消耗</p>
+        </div>
+        <script>
+            const App = {
+                data() {
+                    return {
+                        show: true,
+                        mark: 59,
+                        show2: true,
+                        show3: true,
+                    };
+                },
+            };
+
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
 </html>
