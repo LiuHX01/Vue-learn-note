@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>tempText</title>
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <style>
+            #hh {
+                color: greenyellow;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="App" style="text-align: center">
+            <h1 :id="id1">{{count ** 2}}</h1>
+            <h1 v-once>here: <span v-html="countHTML"></span></h1>
+            <button v-on:click="clickButton">click me</button>
+        </div>
+
+        <script>
+            const App = {
+                data() {
+                    return {
+                        count: 0,
+                        countHTML: "<span style:'color: red'>0</span>",
+                        id1: "hh",
+                    };
+                },
+                methods: {
+                    clickButton() {
+                        this.count = this.count + 1;
+                    },
+                },
+            };
+
+            Vue.createApp(App).mount("#App");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>loginDemo</title>
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app" style="text-align: center">
+            <h1>{{ title }}</h1>
+            <!-- v-if true则渲染 -->
+            <!-- v-model 双向绑定 -->
+            <div v-if="noLogin">
+                账号：<input v-model="userName" type="text" />
+            </div>
+            <div v-if="noLogin">
+                密码：<input v-model="password" type="password" />
+            </div>
+            <div
+                v-on:click="click"
+                style="
+                    border-radius: 30px;
+                    width: 100px;
+                    margin: 20px auto;
+                    color: white;
+                    background-color: blue;
+                "
+            >
+                {{ buttonTitle }}
+            </div>
+        </div>
+        <script>
+            const App = {
+                data() {
+                    return {
+                        title: "未登录",
+                        noLogin: true,
+                        userName: "",
+                        password: "",
+                        buttonTitle: "登录",
+                    };
+                },
+
+                methods: {
+                    click() {
+                        if (this.noLogin) {
+                            this.login();
+                        } else {
+                            this.logout();
+                        }
+                    },
+                    login() {
+                        if (
+                            this.userName.length > 0 &&
+                            this.password.length > 0
+                        ) {
+                            console.log(
+                                `userName:${this.userName} password:${this.password}`
+                            );
+                            this.noLogin = false;
+                            this.title = `欢迎您 ${this.userName}`;
+                            this.buttonTitle = "注销";
+                            this.userName = "";
+                            this.password = "";
+                        } else {
+                            alert("please input correctly");
+                        }
+                    },
+                    logout() {
+                        this.noLogin = true;
+                        this.title = "未登录";
+                        this.buttonTitle = "登录";
+                    },
+                },
+            };
+
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>

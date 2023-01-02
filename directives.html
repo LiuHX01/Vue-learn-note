@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>directives</title>
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <style>
+            #hh {
+                color: red;
+            }
+            .hh {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <!-- prop name -->
+            <h1 v-bind:[qprop]="name" v-if="show">this is title</h1>
+            <!-- model双向绑定 trim自动去首尾空格 -->
+            <input v-model.trim="content" />
+        </div>
+        <script>
+            const App = {
+                data() {
+                    return {
+                        show: true,
+                        qprop: "id",
+                        name: "hh",
+                        content: "",
+                    };
+                },
+                methods: {},
+            };
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>
