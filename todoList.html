@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>todoList</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 阻止默认事件 如提交后刷新 -->
+            <form @submit.prevent="addTask">
+                <span>new task</span>
+                <!-- 无输入时占用 -->
+                <input v-model="taskText" placeholder="input..." />
+                <button>add</button>
+            </form>
+
+            <ol>
+                <li v-for="(item, index) in todos">
+                    {{item}}
+                    <button @click="remove(index)">delete task</button>
+                    <!-- 分割横线 -->
+                    <hr />
+                </li>
+            </ol>
+        </div>
+        <script>
+            const App = {
+                data() {
+                    return {
+                        todos: [],
+                        taskText: "",
+                    };
+                },
+                methods: {
+                    addTask() {
+                        if (this.taskText.length == 0) {
+                            alert("please input");
+                            return;
+                        }
+                        this.todos.push(this.taskText);
+                        this.taskText = "";
+                    },
+                    remove(index) {
+                        this.todos.splice(index, 1);
+                    },
+                },
+            };
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>

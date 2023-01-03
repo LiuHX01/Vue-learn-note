@@ -10,13 +10,44 @@
     <body>
         <div id="app">
             <div v-for="item of list2">{{item}}</div>
+            <div v-for="item3 in list3">
+                <div>{{item3.name}}</div>
+                <div>{{item3.num}}</div>
+            </div>
+            <!-- 下标和元素 -->
+            <div v-for="(item, index) in list3">
+                <div>{{ index + '.' + item.name }}</div>
+            </div>
+            <!--  -->
+            <div v-for="(value, key, index) in list3">{{key}}:{{value}}</div>
+            <button @click="click">reverse</button>
+            <ul>
+                <!-- 筛选渲染 -->
+                <li v-for="(item, index) in handle(list3)">
+                    <div>{{index + '.' + item.name}}</div>
+                    <div>{{item.num}}</div>
+                </li>
+            </ul>
         </div>
         <script>
             const App = {
                 data() {
                     return {
                         list2: ["语法 item in/of list", 2, 3, 4, 5],
+                        list3: [
+                            { name: "a", num: "1234" },
+                            { name: "b", num: "2345" },
+                        ],
                     };
+                },
+
+                methods: {
+                    click() {
+                        this.list2.reverse();
+                    },
+                    handle(l) {
+                        return l.filter((obj) => obj.name != "a");
+                    },
                 },
             };
 

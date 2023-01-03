@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>class</title>
+        <style>
+            .red2 {
+                color: red;
+            }
+            .blue2 {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div :class="style2">
+                class如果绑定obj，则会成为样式，可用bool选择是否显示
+            </div>
+        </div>
+        <script>
+            const App = {
+                data() {
+                    return {
+                        style2: {
+                            blue2: false,
+                            red2: true,
+                            // 也可以用数组
+                        },
+                    };
+                },
+            };
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>

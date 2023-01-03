@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
+        <title>throttle限流</title>
+    </head>
+    <body>
+        <div id="app">
+            <button @click="click">click</button>
+        </div>
+        <script>
+            // 单独封装
+            let throttle = false;
+            function throttleTool(callback, timeout) {
+                if (!throttle) {
+                    callback();
+                } else {
+                    return;
+                }
+                throttle = true;
+                setTimeout(() => {
+                    throttle = false;
+                }, timeout);
+            }
+
+            const App = {
+                data() {
+                    return {
+                        throttle: false,
+                    };
+                },
+                methods: {
+                    click: _.debounce(() => {
+                        console.log(Date());
+                    }, 2000),
+                    // click() {
+                    // 直接实现
+                    // if (!this.throttle) {
+                    //     console.log(Date());
+                    // } else {
+                    //     return;
+                    // }
+                    // this.throttle = true;
+                    // setTimeout(() => {
+                    //     this.throttle = false;
+                    // }, 2000);
+                    // 调用封装后
+                    // throttleTool(() => {
+                    //     console.log(Date());
+                    // }, 2000);
+                    // },
+                },
+            };
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>

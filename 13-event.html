@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>event</title>
+    </head>
+    <body>
+        <div id="app">
+            <div>{{count}}</div>
+            <button @keyup="keyup">click me</button>
+        </div>
+        <script>
+            // 修饰符 capture stop once self prevent passive
+
+            // 常用事件
+            // click dblclick
+            // focus blur
+            // change select
+            // mousedown mouseup
+            // mousemove mouseout移出 mouseover移入
+            // keydown keyup
+
+            // 键盘
+            const App = {
+                data() {
+                    return {
+                        count: 0,
+                    };
+                },
+                methods: {
+                    // click() {
+                    //     this.count++;
+                    // },
+
+                    // 传递事件
+                    click(event) {
+                        console.log(event);
+                        this.count += 1;
+                    },
+
+                    // 传递参数
+                    click(step) {
+                        this.count += step;
+                    },
+
+                    log(event) {
+                        console.log(event);
+                    },
+
+                    keyup(event) {
+                        if (event.key == "Enter") {
+                            console.log("点击");
+                        }
+                    },
+                },
+            };
+
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>

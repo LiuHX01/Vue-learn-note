@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>input</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 单行输入 lazy trim-->
+            <input v-model.lazy.trim="textField"/ >
+            <p>your input is {{textField}}</p>
+            <br />
+            <!-- 多行输入 只能用textarea标签-->
+            <textarea v-model="textarea2"></textarea>
+            <p style="white-space: pre-line">more lines: {{textarea2}}</p>
+            <br />
+            <input type="checkbox" v-model="checkbox2" />
+            <p>{{ checkbox2 }}</p>
+            <br />
+            <!-- 不选则会不显示 -->
+            <input type="checkbox" value="aa" v-model="checkList" />aa
+            <input type="checkbox" value="bb" v-model="checkList" />bb
+            <input type="checkbox" value="cc" v-model="checkList" />cc
+            <p>{{checkList}}</p>
+            <br />
+            <!-- 选哪个显示哪个 -->
+            <input type="radio" value="male" v-model="sex" />male
+            <input type="radio" value="female" v-model="sex" />female
+            <p>{{sex}}</p>
+            <br />
+            <!-- 单选 绑定 -->
+            <select v-model="select">
+                <option>male</option>
+                <option>female</option>
+            </select>
+            <p>{{select}}</p>
+            <br />
+            <!-- 多选 绑定 -->
+            <select v-model="selectList" multiple>
+                <option>man</option>
+                <option>woman</option>
+                <option>unknown</option>
+            </select>
+            <p>{{selectList}}</p>
+        </div>
+        <script>
+            const App = {
+                data() {
+                    return {
+                        textField: "",
+                        textarea2: "",
+                        checkbox2: true,
+                        checkList: ["aa", "bb", "cc"],
+                        sex: "male",
+                        select: "",
+                        selectList: ["man", "woman", "unknown"],
+                    };
+                },
+            };
+
+            Vue.createApp(App).mount("#app");
+        </script>
+    </body>
+</html>
