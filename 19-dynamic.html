@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>dynamic</title>
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- <input type="radio" value="page1" v-model="page" />page111
+            <input type="radio" value="page2" v-model="page" />page222 -->
+            <p>常用切换组件的方式</p>
+            <input type="radio" value="page1" v-model="page" />page1111
+            <input type="radio" value="page2" v-model="page" />page2222
+            <component :is="page"></component>
+        </div>
+
+        <script>
+            const App = Vue.createApp({
+                data() {
+                    return {
+                        page: "page1",
+                    };
+                },
+            });
+
+            const page1 = {
+                template: `
+                    <div style="color:red">page11</div>
+                `,
+            };
+
+            const page2 = {
+                template: `
+                    <div style="color:blue">page22</div>
+                `,
+            };
+
+            App.component("page1", page1);
+            App.component("page2", page2);
+            App.mount("#app");
+        </script>
+    </body>
+</html>

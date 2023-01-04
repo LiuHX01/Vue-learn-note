@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>component3</title>
+    </head>
+    <body>
+        <div id="app">
+            <my-input v-model="inputText"></my-input>
+            <div>{{ inputText }}</div>
+            <button @click="this.inputText = ''">clear</button>
+            <p>支持v-model指令的组件默认提供名为 modelValue 的属性</p>
+            <p>组件内部内容变化后向外传递的事件为 update:modelValue</p>
+            <p>在事件传递时将组件内容作为参数传递</p>
+        </div>
+        <script>
+            const App = Vue.createApp({
+                data() {
+                    return {
+                        inputText: "",
+                    };
+                },
+            });
+
+            const inputComponent = {
+                props: ["modelValue"],
+                methods: {
+                    action(event) {
+                        this.$emit("update:modelValue", event.target.value);
+                    },
+                },
+                template: `<div><span>input: </span><input :value="modelValue" @input="action"/></div>`,
+            };
+
+            App.component("my-input", inputComponent);
+            App.mount("#app");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>slot</title>
+    </head>
+    <body>
+        <div id="app">
+            <p>在 template 中 加入slot标签 其中可加默认内容</p>
+            <my-container>
+                <template v-slot:header>
+                    <p>具名插槽 用name属性设置具体名称 用template包装内容 用v-slot指定位置</p>
+                </template>
+                <template v-slot:another>
+                    <p>这是另一个具名插槽</p>
+                </template>
+                <template #third>
+                    <p>v-slot:也可以用#代替</p>
+                </template>
+            </my-container>
+        </div>
+
+        <script>
+            const App = Vue.createApp({});
+
+            // 在 template 中 加入<slot></slot>
+            const containerComponent = {
+                template: `<div style="border-style:solid;border-color:red;border-width:10px">
+                    <slot>default</slot>
+                    <slot name="header"></slot>
+                    <hr/>
+                    <slot name="another"></slot>
+                    <hr />
+                    <slot name="third"></slot>
+                    </div>`,
+            };
+
+            App.component("my-container", containerComponent);
+            App.mount("#app");
+        </script>
+    </body>
+</html>

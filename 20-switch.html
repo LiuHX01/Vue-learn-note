@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>switch</title>
+    </head>
+    <body>
+        <div id="app">
+            <my-switch
+                @switch-change="change1"
+                switch-style="mini"
+                background-color="green"
+                border-color="green"
+                color="blue"
+            ></my-switch>
+            <div>{{ state1 }}</div>
+            <br />
+            <my-switch
+                @switch-change="change2"
+                switch-style="normal"
+                background-color="blue"
+                border-color="blue"
+                color="red"
+            ></my-switch>
+            <div>{{ state2 }}</div>
+        </div>
+
+        <script>
+            const switchComponent = {
+                // 外部属性
+                props: ["switchStyle", "borderColor", "backgroundColor", "color"],
+
+                data() {
+                    return {
+                        isOpen: false,
+                        left: "0px",
+                    };
+                },
+
+                computed: {
+                    cssStyleBG: {
+                        get() {
+                            if (this.switchStyle == "mini") {
+                                return `
+                                    position: relative;
+                                    border-color: ${this.borderColor};
+                                    bordeer-width: 2px;
+                                    border-style: solid;
+                                    width: 55px;
+                                    height: 30px;
+                                    border-radius: 30px
+                                    background-color: ${this.isOpen ? this.backgroundColor : "white"};
+                                `;
+                            } else {
+                                return `
+                                    position: relative;
+                                    border-color: ${this.borderColor};
+                                    bordeer-width: 2px;
+                                    border-style: solid;
+                                    width: 55px;
+                                    height: 30px;
+                                    border-radius: 10px
+                                    background-color: ${this.isOpen ? this.backgroundColor : "white"};
+                                `;
+                            }
+                        },
+                    },
+                    cssStyleBtn: {
+                        get() {
+                            if (this.switchStyle == "mini") {
+                                return `
+                                    position: absolute;
+                                    width: 30px;
+                                    height: 30px;
+                                    left: ${this.left};
+                                    border-radius: 50%;
+                                    background-color: ${this.color};
+                                `;
+                            } else {
+                                return `
+                                    position: absolute;
+                                    width: 30px;
+                                    height: 30px;
+                                    left: ${this.left};
+                                    border-radius: 8px;
+                                    background-color: ${this.color};
+                                `;
+                            }
+                        },
+                    },
+                },
+
+                methods: {
+                    click() {
+                        this.isOpen = !this.isOpen;
+                        this.left = this.isOpen ? "25px" : "0px";
+                        this.$emit("switchChange", this.isOpen);
+                    },
+                },
+
+                template: `
+                    <div :style="cssStyleBG" @click="click">
+                        <div :style="cssStyleBtn"></div>
+                    </div>
+                `,
+            };
+
+            const App = Vue.createApp({
+                data() {
+                    return {
+                        state1: "close",
+                        state2: "close",
+                    };
+                },
+                methods: {
+                    change1(isOpen) {
+                        this.state1 = isOpen ? "open" : "close";
+                    },
+                    change2(isOpen) {
+                        this.state2 = isOpen ? "open" : "close";
+                    },
+                },
+            });
+
+            App.component("my-switch", switchComponent);
+            App.mount("#app");
+        </script>
+    </body>
+</html>

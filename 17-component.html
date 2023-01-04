@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>component</title>
+    </head>
+    <body>
+        <div id="app">
+            <my-alert title="hello"></my-alert>
+            <my-alert title="world"></my-alert>
+        </div>
+        <script>
+            const App = Vue.createApp({});
+
+            // 定义一个组件 相互独立 复用性
+            const alertComponent = {
+                data() {
+                    return {
+                        msg: "error!",
+                        count: 0,
+                    };
+                },
+                methods: {
+                    click() {
+                        alert(this.msg + this.count++);
+                    },
+                },
+                // 用于外部对其设置
+                props: ["title"],
+                // 模板 重要！
+                template: `<div><button @click="click">{{title}}</div>`,
+            };
+
+            // 组件名=标签名 组件
+            App.component("my-alert", alertComponent);
+            App.mount("#app");
+        </script>
+    </body>
+</html>

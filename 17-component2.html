@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>component2</title>
+    </head>
+    <body>
+        <div id="app">
+            <p>$emit 将myclick事件传递给父组件的appfunc处理</p>
+            <p>可以添加参数</p>
+            <p>也可以在子组件内部先处理，再包装给父组件</p>
+                <my-alert @myclick="appfunc" title="btn1"></my-alert>
+            </p>
+        </div>
+
+        <script>
+            const App = Vue.createApp({
+                methods: {
+                    appfunc(param2) {
+                        console.log("点击了自定义组件" + param2);
+                    },
+                },
+            });
+
+            const alertComponent = {
+                props: ["title"],
+                methods: {
+                    click() {
+                        console.log("组件内部处理");
+                        this.$emit("myclick", this.title);
+                    },
+                },
+                template: `<div><button @click="click">{{title}}</button></div>`,
+            };
+
+            App.component("my-alert", alertComponent);
+            App.mount("#app");
+        </script>
+    </body>
+</html>
