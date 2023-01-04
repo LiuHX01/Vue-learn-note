@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>setup</title>
+    </head>
+    <body>
+        <div id="app">
+            <com name="myname"></com>
+        </div>
+
+        <script>
+            const App = Vue.createApp({});
+            App.component("com", {
+                setup(props, context) {
+                    console.log(props.name);
+
+                    // 属性
+                    console.log(context.attrs);
+
+                    // 插槽
+                    console.log(context.slots);
+
+                    // 触发事件
+                    console.log(context.emit);
+
+                    let data = "setup的数据";
+
+                    return {
+                        data,
+                    };
+
+                    Vue.onBeforeMount(() => {
+                        console.log("onBeforeMount");
+                    });
+                    Vue.onMounted(() => {
+                        console.log("onMounted");
+                    });
+                },
+
+                mounted() {
+                    console.log("mounted");
+                },
+
+                props: {
+                    name: String,
+                },
+
+                template: `
+                    <div>{{ data }}</div>
+                `,
+            });
+
+            App.mount("#app");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <title>normal1</title>
+        <style>
+            .container {
+                margin: 50px;
+            }
+            .content {
+                margin: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script>
+            let mock = [
+                {
+                    name: "Wang",
+                    sex: 0,
+                },
+                {
+                    name: "Hong",
+                    sex: 1,
+                },
+                {
+                    name: "Li",
+                    sex: 1,
+                },
+                {
+                    name: "Zhang",
+                    sex: 0,
+                },
+            ];
+
+            const App = Vue.createApp({
+                setup() {
+                    const showDatas = Vue.ref([]);
+                    const queryAllData = () => {
+                        setTimeout(() => {
+                            showDatas.value = mock;
+                        }, 2000);
+                    };
+
+                    let sexFilter = Vue.ref(-1);
+                    let searchKey = Vue.ref("");
+
+                    let FilterData = () => {
+                        searchKey.value = "";
+                        if (sexFilter.value == -1) {
+                            showDatas.value = mock;
+                        } else {
+                            showDatas.value = mock.filter((data) => {
+                                return data.sex == sexFilter.value;
+                            });
+                        }
+                    };
+
+                    searchData = () => {
+                        sexFilter.value = -1;
+                        if (searchKey.value.length == 0) {
+                            showDatas.value = mock;
+                        } else {
+                            showDatas.value = mock.filter((data) => {
+                                return data.name.search(searchKey.value) != -1;
+                            });
+                        }
+                    };
+
+                    Vue.watch(sexFilter, FilterData);
+                    Vue.watch(searchKey, searchData);
+
+                    return {
+                        showDatas,
+                        searchKey,
+                        sexFilter,
+                    };
+                },
+
+                template: `
+                <div class="container">
+                    <div class="content">
+                        <input type="radio" :value="-1" v-model="sexFilter" />All
+                        <input type="radio" :value="0" v-model="sexFilter" />Male
+                        <input type="radio" :value="1" v-model="sexFilter" />Female
+                    </div>
+                    <div class="context">
+                        Search:
+                        <input type="text" v-model="searchKey" />
+                    </div>
+                    <div class="content">
+                        <table border="1" width="300px">
+                            <tr>
+                                <th>Name</th>
+                                <th>Gender</th>
+                            </tr>
+                            <tr v-for="(data, index) in showDatas">
+                                <td>{{ data.name }}</td>
+                                <td>{{ data.sex == 0 ? 'male1' : 'female1' }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                `,
+
+                mounted() {
+                    queryAllData();
+                },
+            });
+
+            App.mount("#app");
+        </script>
+    </body>
+</html>
